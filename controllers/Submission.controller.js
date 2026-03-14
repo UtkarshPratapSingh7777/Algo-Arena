@@ -23,12 +23,6 @@ export const submitCode = async(req,res) => {
         }
         const problem = await Problem.findById(problemId);
         const contest = await Contest.findById(contestId);
-        if(Date.now() >= contest.endTime){
-            return res.status(400).json({
-                message : "Contest has Ended",
-                success : false
-            })
-        }
         if(!problem){
             return res.status(404).json({
                 message : "Problem Not Found",
@@ -38,6 +32,12 @@ export const submitCode = async(req,res) => {
         if(!contest){
             return res.status(404).json({
                 message : "Contest Does Not Exists",
+                success : false
+            })
+        }
+        if(Date.now() >= contest.endTime){
+            return res.status(400).json({
+                message : "Contest has Ended",
                 success : false
             })
         }
@@ -119,7 +119,7 @@ export const mySubmissions = async(req,res) => {
     try {
         const userId = req.userId;
         const submissions = await Submission.find({ user : userId });
-        return res.status(200).josn({
+        return res.status(200).json({
             message : "Submissions Fetched",
             success : true,
             submissions

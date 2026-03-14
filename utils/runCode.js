@@ -1,6 +1,10 @@
 import fs from "fs";
 import path from "path";
 import { spawn } from "child_process";
+const timer = setTimeout(() => {
+    docker.kill();
+    resolve("Time Limit Exceeded");
+}, 5000);
 export const runCode = (code, input) => {
     const id = Date.now();
     const codeFile = path.join("temp", `code_${id}.py`);
@@ -25,6 +29,7 @@ export const runCode = (code, input) => {
         docker.stdout.on("data", d => output += d.toString());
         docker.stderr.on("data", d => error += d.toString());
         docker.on("close", () => {
+            clearTimeout(timer);
             fs.unlinkSync(codeFile);
             fs.unlinkSync(inputFile);
             if (error) return reject(error);

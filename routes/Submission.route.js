@@ -5,8 +5,8 @@ const router = express.Router();
 
 
 router.route("/").post(authenticate,submitCode);
-router.route("/:submissionId").post(authenticate,getVerdict)
 router.route("/user").get(mySubmissions);
+router.route("/:submissionId").get(authenticate,getVerdict)
 
 
 

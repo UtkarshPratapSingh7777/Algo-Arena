@@ -7,6 +7,7 @@ import contestRoute from "./routes/Contest.route.js"
 import submissionRoute from "./routes/Submission.route.js"
 import connectdb from "./utils/db.js";
 import problemRoute from "./routes/Problem.route.js";
+import "./workers/endWorker.js"
 dotenv.config({});
 const app = express();
 // middleware

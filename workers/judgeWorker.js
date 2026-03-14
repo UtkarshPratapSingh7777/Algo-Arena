@@ -35,7 +35,7 @@ async function runCodeandUpdate(submissionId) {
             const entry = contest.leaderboard.find(
                 e => e.user.toString() === submission.user.toString()
             );
-            if (!entry || !entry.solvedProblems.length || !entry.solvedProblems.includes(submission.problem)) {
+            if (!entry || !entry.solvedProblems.some(id => id.toString() === submission.problem.toString())) {
                 entry.solved += 1;
                 entry.score += 100;
                 const penaltyTime = Math.floor(
